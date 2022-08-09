@@ -67,8 +67,10 @@ class Walker:
 
         visual = animation.FuncAnimation(fig, self.update, len(self.x_arr), fargs=[self.x_arr, self.y_arr, line],
                                             interval =100, blit=False)
+        fig.suptitle('Lévy Walk Animation')
 
         plt.show()
+
             
 walker = Walker(2)
 t_step = 100
