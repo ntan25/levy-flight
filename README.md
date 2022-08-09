@@ -1,4 +1,4 @@
-# levy-flight
+# lévy-flight
 Computational model of a bounded Lévy Flight 
 
 Lévy flight represents a model of understanding we have for reaching a target destination. 
