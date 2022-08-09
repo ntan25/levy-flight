@@ -72,9 +72,10 @@ class Walker:
         # if self.dim == 3: 
         #     raise Exception("Not Implemented Yet")
 
-        fig, ax = plt.subplots()
+        
 
         if self.dim == 3: 
+            fig = plt.figure()
             ax = plt.axes(projection='3d')
             line, = ax.plot3D(self.x_arr, self.y_arr, self.z_arr, 'b')  
             
@@ -82,7 +83,7 @@ class Walker:
             fig, ax = plt.subplots()
             line, = ax.plot(self.x_arr, self.y_arr, 'b')
             visual = animation.FuncAnimation(fig, self.update, len(self.x_arr), fargs=[self.x_arr, self.y_arr, line],
-                                            interval =5, blit=False)
+                                            interval =1, blit=False)
                                     
         fig.suptitle('Lévy Walk Animation')
 
