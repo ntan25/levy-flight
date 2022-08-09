@@ -2,6 +2,7 @@ import numpy as np
 from scipy.stats import levy 
 import matplotlib.pyplot as plt
 import matplotlib.animation as animation
+from mpl_toolkits import mplot3d
 import random
 
 class Walker: 
@@ -19,8 +20,8 @@ class Walker:
             self.x_arr = []
             self.y_arr = []
         
-        self.alpha = 0.35
-        self.beta = 0.5
+        self.alpha = 3.
+        self.beta = 2.
         self.dim = dim
         self.max_dist = 50
 
@@ -37,10 +38,12 @@ class Walker:
         else:
             self.pos_y -= min(self.max_dist, rand_levy[1])
 
-
-
+        
         if self.dim == 3: 
-            self.pos_z = self.pos_z + rand_levy[2]
+            if bool(random.getrandbits(1)): 
+                self.pos_z += min(self.max_dist, rand_levy[2])
+            else: 
+                self.pos_z -= min(self.max_dist, rand_levy[2])
             self.x_arr.append(self.pos_x)
             self.y_arr.append(self.pos_y)
             self.z_arr.append(self.pos_z)
@@ -50,30 +53,44 @@ class Walker:
             self.y_arr.append(self.pos_y)
 
     def update(self, num, x, y, line): 
+        
+
+       
         line.set_data(x[:num], y[:num])
+
         x_min = np.amin(self.x_arr)
         x_max = np.amax(self.x_arr)
         y_min = np.amin(self.y_arr)
         y_max = np.amax(self.y_arr)
+
+        
         line.axes.axis([x_min, x_max, y_min, y_max])
+
         return line,
 
     def show_path(self): 
-        if self.dim == 3: 
-            raise Exception("Not Implemented Yet")
+        # if self.dim == 3: 
+        #     raise Exception("Not Implemented Yet")
+
         fig, ax = plt.subplots()
 
-        line, = ax.plot(self.x_arr, self.y_arr, 'b')
-
-        visual = animation.FuncAnimation(fig, self.update, len(self.x_arr), fargs=[self.x_arr, self.y_arr, line],
-                                            interval =100, blit=False)
+        if self.dim == 3: 
+            ax = plt.axes(projection='3d')
+            line, = ax.plot3D(self.x_arr, self.y_arr, self.z_arr, 'b')  
+            
+        else: 
+            fig, ax = plt.subplots()
+            line, = ax.plot(self.x_arr, self.y_arr, 'b')
+            visual = animation.FuncAnimation(fig, self.update, len(self.x_arr), fargs=[self.x_arr, self.y_arr, line],
+                                            interval =5, blit=False)
+                                    
         fig.suptitle('Lévy Walk Animation')
 
         plt.show()
 
             
 walker = Walker(2)
-t_step = 100
+t_step = 1000
 
 
 for i in range(t_step):
