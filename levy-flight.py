@@ -20,10 +20,10 @@ class Walker:
             self.x_arr = []
             self.y_arr = []
         
-        self.alpha = 3.
-        self.beta = 2.
+        self.alpha = 0.5
+        self.beta = 1
         self.dim = dim
-        self.max_dist = 50
+        self.max_dist = 1000
 
     def update_pos(self):
         rand_levy = levy.rvs(self.alpha,self.beta, size=self.dim)
@@ -57,7 +57,6 @@ class Walker:
 
        
         line.set_data(x[:num], y[:num])
-
         x_min = np.amin(self.x_arr)
         x_max = np.amax(self.x_arr)
         y_min = np.amin(self.y_arr)
@@ -69,10 +68,6 @@ class Walker:
         return line,
 
     def show_path(self): 
-        # if self.dim == 3: 
-        #     raise Exception("Not Implemented Yet")
-
-        
 
         if self.dim == 3: 
             fig = plt.figure()
@@ -90,14 +85,14 @@ class Walker:
         plt.show()
 
             
-walker = Walker(2)
-t_step = 1000
+walker = Walker(3)
+t_step = 10000
 
 
 for i in range(t_step):
     print("x: {}".format(walker.pos_x))
     print("y: {}".format(walker.pos_y))
-    print("*" * 10) 
+    print("*" * 30) 
     walker.update_pos()
     
 walker.show_path()
