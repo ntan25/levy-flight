@@ -7,7 +7,7 @@ import random
 
 class Walker: 
 
-    def __init__(self, dim: int) -> None:
+    def __init__(self, dim: int, alpha=0.5, beta=1, max_dist=1000) -> None:
         self.pos_x = 0
         self.pos_y = 0
         self.pos_z = 0
@@ -20,10 +20,10 @@ class Walker:
             self.x_arr = []
             self.y_arr = []
         
-        self.alpha = 0.5
-        self.beta = 1
+        self.alpha = alpha
+        self.beta = beta
         self.dim = dim
-        self.max_dist = 1000
+        self.max_dist = max_dist
 
     def update_pos(self):
         rand_levy = levy.rvs(self.alpha,self.beta, size=self.dim)
@@ -87,7 +87,7 @@ class Walker:
         plt.show()
 
             
-walker = Walker(3)
+walker = Walker(2)
 t_step = 10000
 
 
