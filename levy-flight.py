@@ -28,6 +28,8 @@ class Walker:
     def update_pos(self):
         rand_levy = levy.rvs(self.alpha,self.beta, size=self.dim)
         
+        #We don't use uniform angle sampling instead we determine direction using simple 
+        #bool random bits
         if bool(random.getrandbits(1)): 
             self.pos_x += min(self.max_dist, rand_levy[0])
         else: 
